@@ -3,12 +3,12 @@ const TableRow = (props: { cell }) => {
   const cell = props.cell;
   return (
     <tr>
-      <td>
+      <td className="border-y-2">
         <input
           type="text"
           id="in-employee"
           placeholder="Name"
-          className="h-10 w-full"
+          className="h-10 w-full pl-2"
         />
       </td>
       {Array.from({ length: ROW_COUNT }).map(() => cell)}
