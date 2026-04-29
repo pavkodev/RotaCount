@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TableHeaders from "./TableHeaders";
 import TableRow from "./TableRow";
-import TableCell from "./TableHoursCell";
 
 const TableComponent = () => {
-  const row = <TableRow cell={<TableCell></TableCell>} />;
+  const row = <TableRow />;
   const [dataRows, setDataRows] = useState(1);
   return (
     <>

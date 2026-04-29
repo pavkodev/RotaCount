@@ -10,6 +10,9 @@ const TableHeaders = () => {
         <th scope="col">Thursday</th>
         <th scope="col">Friday</th>
         <th scope="col">Saturday</th>
+        <th className="italic" scope="col">
+          TOTAL
+        </th>
       </tr>
     </thead>
   );
