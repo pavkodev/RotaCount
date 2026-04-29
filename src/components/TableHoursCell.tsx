@@ -33,19 +33,6 @@ const TableHoursCell = () => {
     } else return (hours + 24).toFixed(2);
   };
 
-  const checkExtended = (): boolean => {
-    const hours = totalHoursWorked;
-
-    if (hours >= 0) {
-      if (!userToggledExtensionOff && hours < 3) {
-        setUserToggledExtensionOff(false);
-      }
-      return false;
-    } else if (hours + 12 > 0) {
-      return false;
-    } else return false;
-  };
-
   return (
     <td className="border border-y-2">
       <table className="my-2 justify-self-stretch">
