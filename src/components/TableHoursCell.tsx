@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const TableHoursCell = () => {
+const TableHoursCell = ({
+  sendHours,
+}: {
+  sendHours: (hours: number) => void;
+}) => {
+  const startRef = useRef(null);
+  const endRef = useRef(null);
   const [startTime, setStartTime] = useState("");
   const [startHours, startMinutes] = startTime.split(":");
   const totalStartMinutes = parseInt(startHours) * 60 + parseInt(startMinutes);
@@ -20,18 +26,28 @@ const TableHoursCell = () => {
   console.log(extensionPresent);
   const [userToggledExtensionOff, setUserToggledExtensionOff] = useState(false);
 
-  const displayHours = (): string => {
+  const processHours = (): string => {
     const hours = totalHoursWorked;
 
     if (hours >= 0) {
       if (!userToggledExtensionOff && hours < 3) {
+        sendHours(hours + 12);
         return (hours + 12).toFixed(2);
       }
+      sendHours(hours);
       return hours.toFixed(2);
     } else if (hours + 12 > 0) {
+      sendHours(hours + 12);
       return (hours + 12).toFixed(2);
-    } else return (hours + 24).toFixed(2);
+    } else {
+      sendHours(hours + 24);
+      return (hours + 24).toFixed(2);
+    }
   };
+
+  if (!startTime || !endTime) {
+    sendHours(0);
+  }
 
   return (
     <td className="border border-y-2">
@@ -46,7 +62,7 @@ const TableHoursCell = () => {
               <input
                 type="time"
                 className="rounded-md border border-gray-400/50 p-1"
-                id="time-start-hours"
+                ref={startRef}
                 onChange={(e) => {
                   setStartTime(e.target.value);
                 }}
@@ -56,7 +72,7 @@ const TableHoursCell = () => {
               <input
                 type="time"
                 className="rounded-md border border-gray-400/50 p-1"
-                id="time-end-hours"
+                ref={endRef}
                 onChange={(e) => {
                   setEndTime(e.target.value);
                 }}
@@ -65,7 +81,7 @@ const TableHoursCell = () => {
           </tr>
         </tbody>
       </table>
-      {startTime !== "" && endTime != "" ? (
+      {startTime && endTime ? (
         extensionPresent ? (
           <button
             onClick={() => {
@@ -82,13 +98,13 @@ const TableHoursCell = () => {
             </svg>
             <p className="pb-1 text-center">
               {startTime !== "" && endTime != ""
-                ? displayHours() + " hours"
+                ? processHours() + " hours"
                 : ""}
             </p>
           </button>
         ) : (
           <p className="mb-2 text-center">
-            {startTime !== "" && endTime != "" ? displayHours() + " hours" : ""}
+            {startTime !== "" && endTime != "" ? processHours() + " hours" : ""}
           </p>
         )
       ) : (
