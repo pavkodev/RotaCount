@@ -16,31 +16,34 @@ const TableHoursCell = ({
   const totalEndMinutes = parseInt(endHours) * 60 + parseInt(endMinutes);
 
   const totalMinutesWorked = totalEndMinutes - totalStartMinutes;
-  let totalHoursWorked = Math.ceil((totalMinutesWorked / 60) * 100) / 100;
-  console.log(totalHoursWorked);
-  if (totalHoursWorked < 0) {
-    totalHoursWorked += 12;
+  const totalHoursWorked = totalMinutesWorked / 60;
+  let totalHoursWorkedRounded =
+    Math.round((totalMinutesWorked / 60) * 100) / 100;
+  console.log(totalHoursWorkedRounded);
+  if (totalHoursWorkedRounded < 0) {
+    totalHoursWorkedRounded += 12;
   }
-  const extensionPresent = totalHoursWorked < 3 ? true : false;
-  console.log(totalHoursWorked);
+  const extensionPresent = totalHoursWorkedRounded < 3 ? true : false;
+  console.log(totalHoursWorkedRounded);
   console.log(extensionPresent);
   const [userToggledExtensionOff, setUserToggledExtensionOff] = useState(false);
 
   const processHours = (): string => {
-    const hours = totalHoursWorked;
+    const hours = totalHoursWorkedRounded;
+    const rawHours = totalHoursWorked;
 
     if (hours >= 0) {
       if (!userToggledExtensionOff && hours < 3) {
-        sendHours(hours + 12);
+        sendHours(rawHours + 12);
         return (hours + 12).toFixed(2);
       }
-      sendHours(hours);
+      sendHours(rawHours);
       return hours.toFixed(2);
     } else if (hours + 12 > 0) {
-      sendHours(hours + 12);
+      sendHours(rawHours + 12);
       return (hours + 12).toFixed(2);
     } else {
-      sendHours(hours + 24);
+      sendHours(rawHours + 24);
       return (hours + 24).toFixed(2);
     }
   };
