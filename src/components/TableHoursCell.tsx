@@ -16,7 +16,7 @@ const TableHoursCell = ({
   const totalEndMinutes = parseInt(endHours) * 60 + parseInt(endMinutes);
 
   const totalMinutesWorked = totalEndMinutes - totalStartMinutes;
-  let totalHoursWorked = Math.floor((totalMinutesWorked / 60) * 100) / 100;
+  let totalHoursWorked = Math.ceil((totalMinutesWorked / 60) * 100) / 100;
   console.log(totalHoursWorked);
   if (totalHoursWorked < 0) {
     totalHoursWorked += 12;

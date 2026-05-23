@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import TableHeaders from "./TableHeaders";
 import TableRow from "./TableRow";
 
